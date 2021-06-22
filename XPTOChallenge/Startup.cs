@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using System.Globalization;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -37,12 +39,23 @@ namespace XPTOChallenge
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddDbContext<XPTOChallengeContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("XPTOChallengeContext")));
+                    options.UseMySql(Configuration.GetConnectionString("XPTOChallengeContext"), 
+                    builder => builder.MigrationsAssembly("XPTOChallenge")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+
+            var br = new CultureInfo("pt-BR");
+            var localizationOptions = new RequestLocalizationOptions
+            {
+                DefaultRequestCulture = new RequestCulture(br),
+                SupportedCultures = new List<CultureInfo> { br },
+                SupportedUICultures = new List<CultureInfo> { br }
+            };
+            app.UseRequestLocalization(localizationOptions);
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -61,7 +74,7 @@ namespace XPTOChallenge
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=OrdemServicoes}/{action=Index}/{id?}");
             });
         }
     }
