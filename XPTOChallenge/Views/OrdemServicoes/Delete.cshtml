@@ -1,0 +1,63 @@
+﻿@model XPTOChallenge.Models.OrdemServico
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>OrdemServico</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.tituloServico)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.tituloServico)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.nomeCliente)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.nomeCliente)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.valorServico)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.valorServico)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.dataExecucao)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.dataExecucao)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CNPJClient)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CNPJClient)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CPFPrestador)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CPFPrestador)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.nomePrestador)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.nomePrestador)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

@@ -1,0 +1,60 @@
+﻿@model XPTOChallenge.Models.OrdemServico
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>OrdemServico</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.tituloServico)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.tituloServico)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.nomeCliente)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.nomeCliente)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.valorServico)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.valorServico)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.dataExecucao)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.dataExecucao)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CNPJClient)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CNPJClient)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CPFPrestador)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CPFPrestador)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.nomePrestador)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.nomePrestador)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
