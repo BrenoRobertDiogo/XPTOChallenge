@@ -73,7 +73,8 @@ namespace XPTOChallenge.Controllers
                 return NotFound();
             }
 
-            var ordemServico = await _context.OrdemServico.FindAsync(id);
+            var ordemServico = await _context.OrdemServico.FindAsync(id.Value);
+            Console.WriteLine("++++++++++++++++++++ACHOU(Funcao 1)++++++++++++++++++++\n" + ordemServico.nomeCliente + "\n++++++++++++++++++++++++++++++++++++++++");
             if (ordemServico == null)
             {
                 return NotFound();
@@ -84,19 +85,18 @@ namespace XPTOChallenge.Controllers
         // POST: OrdemServicoes/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,tituloServico,nomeCliente,valorServico,dataExecucao,CNPJClient,CPFPrestador,nomePrestador")] OrdemServico ordemServico)
+        public async Task<IActionResult> Edit(int id,OrdemServico ordemServico)
         {
-            if (id != ordemServico.Id)
-            {
-                return NotFound();
-            }
-
             if (ModelState.IsValid)
             {
+                Console.WriteLine("++++++++++++++++++++++++++PASSOU++++++++++++++\n" + id + " " + ordemServico.Id + "\n++++++++++++++++++++++++++++++++++++++++");
+
                 try
                 {
+                    Console.WriteLine("++++++++++++++++++++++++++UPDATE COMPLETE++++++++++++++");
                     _context.Update(ordemServico);
                     await _context.SaveChangesAsync();
                 }
@@ -113,9 +113,15 @@ namespace XPTOChallenge.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            if (id != ordemServico.Id)
+            {
+                Console.WriteLine("++++++++++++++++++ERROR++++++++++++++++++++++\n" + id + " " + ordemServico.Id + "\n++++++++++++++++++++++++++++++++++++++++");
+                return RedirectToAction(nameof(Index));
+            }
+            
             return View(ordemServico);
         }
-
+        
         // GET: OrdemServicoes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {

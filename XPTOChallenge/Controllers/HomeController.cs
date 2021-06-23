@@ -24,7 +24,7 @@ namespace XPTOChallenge.Controllers
 
         public IActionResult Contact()
         {
-            ViewData["Message"] = "Your contact page.";
+            ViewData["Message"] = "Págoma de contato";
 
             return View();
         }

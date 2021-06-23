@@ -22,8 +22,8 @@ namespace XPTOChallenge.Models
         }
 
 
-        [Display(Name = "ID")]
-        [Editable(allowEdit:false)]
+        [Display(Name = "Nº OS")]
+        //[Editable(allowEdit:false)]
         public int Id { get; set; }
         [Display(Name ="Serviço")]
         public string tituloServico { get; set; }
