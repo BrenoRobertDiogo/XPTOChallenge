@@ -16,7 +16,8 @@ namespace XPTOChallenge.Services
         }
         public List<Cliente> FindAll()
         {
-            return _context.Cliente.OrderBy(x => x.nomeCliente).ToList();
+            var teste = _context.Cliente.OrderBy(x => x.nomeCliente).ToList();
+            return teste;
         }
     }
 }

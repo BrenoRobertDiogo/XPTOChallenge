@@ -6,7 +6,6 @@
 
 <h2>@ViewData["Title"]</h2>
 
-<span>
     <a asp-action="Create" class="btn btn-warning">Criar novo</a>
     <form>
         <div class="form-group">
@@ -14,21 +13,13 @@
             <span>
 
                 <select class="form-control" style="width: 15em" id="selecionaVendedor" 
-                        asp-items="@(new SelectList(Model, "Id", "Cliente"))">
-                    
-
-                    @*<option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>*@
+                        asp-items="@(new SelectList(Model, "Cliente.Id", "Cliente.nomeCliente"))">
                 </select>
 
             </span>
         </div>
 
     </form>
-</span>
 <table class="table" style="width: 100%">
     <thead>
         <tr>
@@ -47,7 +38,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.dataExecucao)
             </th>
-            <th></th>
+            <th>Operações</th>
         </tr>
     </thead>
     <tbody>
@@ -59,9 +50,11 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.tituloServico)
+                    
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Cliente.nomeCliente)
+
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.valorServico)

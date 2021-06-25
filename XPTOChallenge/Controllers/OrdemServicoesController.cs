@@ -26,7 +26,11 @@ namespace XPTOChallenge.Controllers
         // GET: OrdemServicoes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.OrdemServico.ToListAsync());
+            // _ordemService.FindAll();
+            _context.Cliente.OrderBy(x => x.nomeCliente).ToList();
+            var ordens = await _context.OrdemServico.ToListAsync();
+
+            return View(ordens);
         }
 
         // GET: OrdemServicoes/Details/5
@@ -51,7 +55,8 @@ namespace XPTOChallenge.Controllers
         public IActionResult Create()
         {
             var clientes = _ordemService.FindAll();
-            var viewModel = new OrdemServiceViewModel { Clients = clientes };
+            var viewModel = new OrdemServiceViewModel(clientes);
+            
             return View(viewModel);
         }
 
@@ -68,6 +73,7 @@ namespace XPTOChallenge.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            _context.Cliente.OrderBy(x => x.nomeCliente).ToList();
             return View(ordemServico);
         }
 
