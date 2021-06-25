@@ -7,7 +7,7 @@
 
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-        <link rel="stylesheet" href="~/css/site.css" />
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     </environment>
     <environment exclude="Development">
         < <link rel="stylesheet" href="https://bootswatch.com/3/darkly/bootstrap.min.css"
@@ -31,6 +31,7 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="OrdemServicoes" asp-action="Index">Home</a></li>
+                    <li><a asp-area="" asp-controller="Clientes" asp-action="Index">Clientes</a></li>
                     <li><a href="https://prosperiglobal.com/en/sobre-nos/" target="_blank">About</a></li>
                     <li><a href="https://prosperiglobal.com/en/contato/" target="_blank">Contact</a></li>
                 </ul>
@@ -40,7 +41,7 @@
 
     <partial name="_CookieConsentPartial" />
 
-    <div class="container body-content">
+    <div class="container body-content" style="width: 100%;padding-top: 3em">
         @RenderBody()
         <hr />
         <footer>

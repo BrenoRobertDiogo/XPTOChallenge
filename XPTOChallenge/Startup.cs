@@ -13,6 +13,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using XPTOChallenge.Data;
+using XPTOChallenge.Services;
 
 namespace XPTOChallenge
 {
@@ -41,6 +42,9 @@ namespace XPTOChallenge
             services.AddDbContext<XPTOChallengeContext>(options =>
                     options.UseMySql(Configuration.GetConnectionString("XPTOChallengeContext"), 
                     builder => builder.MigrationsAssembly("XPTOChallenge")));
+
+            services.AddScoped<ClienteService>();
+            services.AddScoped<OrdemServicoService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

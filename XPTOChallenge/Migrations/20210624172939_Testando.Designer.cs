@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using XPTOChallenge.Data;
 
 namespace XPTOChallenge.Migrations
 {
     [DbContext(typeof(XPTOChallengeContext))]
-    partial class XPTOChallengeContextModelSnapshot : ModelSnapshot
+    [Migration("20210624172939_Testando")]
+    partial class Testando
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,7 +26,8 @@ namespace XPTOChallenge.Migrations
 
                     b.Property<int>("CEP");
 
-                    b.Property<long>("CNPJClient");
+                    b.Property<int>("CNPJClient")
+                        .HasMaxLength(14);
 
                     b.Property<string>("nomeCliente");
 
@@ -41,7 +44,7 @@ namespace XPTOChallenge.Migrations
                     b.Property<string>("CPFPrestador")
                         .HasMaxLength(11);
 
-                    b.Property<int>("ClienteId");
+                    b.Property<int?>("clienteId");
 
                     b.Property<DateTime>("dataExecucao");
 
@@ -53,7 +56,7 @@ namespace XPTOChallenge.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClienteId");
+                    b.HasIndex("clienteId");
 
                     b.ToTable("OrdemServico");
                 });
@@ -62,8 +65,7 @@ namespace XPTOChallenge.Migrations
                 {
                     b.HasOne("XPTOChallenge.Models.Cliente", "Cliente")
                         .WithMany()
-                        .HasForeignKey("ClienteId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("clienteId");
                 });
 #pragma warning restore 612, 618
         }

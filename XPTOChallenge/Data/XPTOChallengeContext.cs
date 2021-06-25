@@ -15,5 +15,7 @@ namespace XPTOChallenge.Data
         }
 
         public DbSet<XPTOChallenge.Models.OrdemServico> OrdemServico { get; set; }
+
+        public DbSet<XPTOChallenge.Models.Cliente> Cliente { get; set; }
     }
 }

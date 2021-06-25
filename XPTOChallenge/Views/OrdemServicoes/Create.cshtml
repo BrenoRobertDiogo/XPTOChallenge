@@ -1,4 +1,4 @@
-﻿@model XPTOChallenge.Models.OrdemServico
+﻿@model XPTOChallenge.Models.ViewModel.OrdemServiceViewModel
 
 @{
     ViewData["Title"] = "Cadastro";
@@ -13,51 +13,64 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="tituloServico" class="control-label"></label>
-                <input asp-for="tituloServico" class="form-control" />
-                <span asp-validation-for="tituloServico" class="text-danger"></span>
+                <label asp-for="ordemServico.tituloServico" class="control-label"></label>
+                <input asp-for="ordemServico.tituloServico" class="form-control" />
+                <span asp-validation-for="ordemServico.tituloServico" class="text-danger"></span>
+            </div>
+            @*<div class="form-group">
+            <label asp-for="ordemServico.Cliente.nomeCliente" class="control-label"></label>
+            <input asp-for="ordemServico.Cliente.nomeCliente" class="form-control" />
+            <span asp-validation-for="ordemServico.Cliente.nomeCliente" class="text-danger"></span>
+        </div>*@
+            <div class="form-group">
+                <label asp-for="ordemServico.valorServico" class="control-label"></label>
+                <input asp-for="ordemServico.valorServico" type="number" class="form-control" />
+                <span asp-validation-for="ordemServico.valorServico" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="nomeCliente" class="control-label"></label>
-                <input asp-for="nomeCliente" class="form-control" />
-                <span asp-validation-for="nomeCliente" class="text-danger"></span>
+                <label asp-for="ordemServico.dataExecucao" class="control-label"></label>
+                <input asp-for="ordemServico.dataExecucao" class="form-control" />
+                <span asp-validation-for="ordemServico.dataExecucao" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="valorServico" class="control-label"></label>
-                <input asp-for="valorServico" class="form-control" />
-                <span asp-validation-for="valorServico" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="dataExecucao" class="control-label"></label>
-                <input asp-for="dataExecucao" class="form-control" />
-                <span asp-validation-for="dataExecucao" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CNPJClient" class="control-label"></label>
-                <input asp-for="CNPJClient" class="form-control" type="number"/>
-                <span asp-validation-for="CNPJClient" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CPFPrestador" class="control-label"></label>
-                <input asp-for="CPFPrestador" class="form-control" type="number"/>
-                <span asp-validation-for="CPFPrestador" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="nomePrestador" class="control-label"></label>
-                <input asp-for="nomePrestador" class="form-control" />
-                <span asp-validation-for="nomePrestador" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Criar" class="btn btn-default" />
-            </div>
-        </form>
-    </div>
-</div>
+            @*<div class="form-group">
+                        <label asp-for="ordemServico.Cliente.CNPJClient" class="control-label"></label>
+                        <input asp-for="ordemServico.Cliente.CNPJClient" class="form-control" type="number"/>
+                        <span asp-validation-for="ordemServico.Cliente.CNPJClient" class="text-danger"></span>
 
-<div>
-    <a asp-action="Index" class="btn btn-default">Voltar</a>
-</div>
+                    </div>*@
+                    <div class="form-group">
+                        <label asp-for="ordemServico.ClienteId" class="control-label"></label>
+                        <select class="form-control" 
+                                asp-for="ordemServico.ClienteId" 
+                                asp-items="@(new SelectList(Model.Clients, "Id", "nomeCliente"))">
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+                        </select>
+
+
+                    </div>
+
+
+                    <div class="form-group">
+                        <label asp-for="ordemServico.CPFPrestador" class="control-label"></label>
+                        <input asp-for="ordemServico.CPFPrestador" class="form-control" type="number"/>
+                        <span asp-validation-for="ordemServico.CPFPrestador" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ordemServico.nomePrestador" class="control-label"></label>
+                        <input asp-for="ordemServico.nomePrestador" class="form-control" />
+                        <span asp-validation-for="ordemServico.nomePrestador" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Criar" class="btn btn-default" />
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div>
+            <a asp-action="Index" class="btn btn-default">Voltar</a>
+        </div>
+
+        @section Scripts {
+            @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+        }

@@ -12,24 +12,23 @@ using XPTOChallenge.Services;
 
 namespace XPTOChallenge.Controllers
 {
-    public class OrdemServicoesController : Controller
+    public class ClientesController : Controller
     {
         private readonly XPTOChallengeContext _context;
-        private readonly OrdemServicoService _ordemService;
+        //private readonly ClienteService _clientesService;
 
-        public OrdemServicoesController(XPTOChallengeContext context, OrdemServicoService ordemServicoService)
+        public ClientesController(XPTOChallengeContext context)
         {
             _context = context;
-            _ordemService = ordemServicoService;
         }
 
-        // GET: OrdemServicoes
+        // GET: Clientes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.OrdemServico.ToListAsync());
+            return View(await _context.Cliente.ToListAsync());
         }
 
-        // GET: OrdemServicoes/Details/5
+        // GET: Clientes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -37,41 +36,40 @@ namespace XPTOChallenge.Controllers
                 return NotFound();
             }
 
-            var ordemServico = await _context.OrdemServico
+            var cliente = await _context.Cliente
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (ordemServico == null)
+            if (cliente == null)
             {
                 return NotFound();
             }
 
-            return View(ordemServico);
+            return View(cliente);
         }
 
-        // GET: OrdemServicoes/Create
+        // GET: Clientes/Create
         public IActionResult Create()
         {
-            var clientes = _ordemService.FindAll();
-            var viewModel = new OrdemServiceViewModel { Clients = clientes };
-            return View(viewModel);
+            
+            return View();
         }
 
-        // POST: OrdemServicoes/Create
+        // POST: Clientes/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(OrdemServico ordemServico)
+        public async Task<IActionResult> Create([Bind("CNPJClient,nomeCliente,CEP,Id")] Cliente cliente)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(ordemServico);
+                _context.Add(cliente);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(ordemServico);
+            return View(cliente);
         }
 
-        // GET: OrdemServicoes/Edit/5
+        // GET: Clientes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -79,35 +77,36 @@ namespace XPTOChallenge.Controllers
                 return NotFound();
             }
 
-            var ordemServico = await _context.OrdemServico.FindAsync(id.Value);
-            if (ordemServico == null)
+            var cliente = await _context.Cliente.FindAsync(id);
+            if (cliente == null)
             {
                 return NotFound();
             }
-            return View(ordemServico);
+            return View(cliente);
         }
 
-        // POST: OrdemServicoes/Edit/5
+        // POST: Clientes/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id,OrdemServico ordemServico)
+        public async Task<IActionResult> Edit(int id, [Bind("CNPJClient,nomeCliente,CEP,Id")] Cliente cliente)
         {
+            if (id != cliente.Id)
+            {
+                return NotFound();
+            }
+
             if (ModelState.IsValid)
             {
-                Console.WriteLine("++++++++++++++++++++++++++PASSOU++++++++++++++\n" + id + " " + ordemServico.Id + "\n++++++++++++++++++++++++++++++++++++++++");
-
                 try
                 {
-                    Console.WriteLine("++++++++++++++++++++++++++UPDATE COMPLETE++++++++++++++");
-                    _context.Update(ordemServico);
+                    _context.Update(cliente);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!OrdemServicoExists(ordemServico.Id))
+                    if (!ClienteExists(cliente.Id))
                     {
                         return NotFound();
                     }
@@ -118,16 +117,10 @@ namespace XPTOChallenge.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            if (id != ordemServico.Id)
-            {
-                Console.WriteLine("++++++++++++++++++ERROR++++++++++++++++++++++\n" + id + " " + ordemServico.Id + "\n++++++++++++++++++++++++++++++++++++++++");
-                return RedirectToAction(nameof(Index));
-            }
-            
-            return View(ordemServico);
+            return View(cliente);
         }
-        
-        // GET: OrdemServicoes/Delete/5
+
+        // GET: Clientes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -135,30 +128,30 @@ namespace XPTOChallenge.Controllers
                 return NotFound();
             }
 
-            var ordemServico = await _context.OrdemServico
+            var cliente = await _context.Cliente
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (ordemServico == null)
+            if (cliente == null)
             {
                 return NotFound();
             }
 
-            return View(ordemServico);
+            return View(cliente);
         }
 
-        // POST: OrdemServicoes/Delete/5
+        // POST: Clientes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var ordemServico = await _context.OrdemServico.FindAsync(id);
-            _context.OrdemServico.Remove(ordemServico);
+            var cliente = await _context.Cliente.FindAsync(id);
+            _context.Cliente.Remove(cliente);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool OrdemServicoExists(int id)
+        private bool ClienteExists(int id)
         {
-            return _context.OrdemServico.Any(e => e.Id == id);
+            return _context.Cliente.Any(e => e.Id == id);
         }
     }
 }
