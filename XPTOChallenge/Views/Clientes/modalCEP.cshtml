@@ -1,0 +1,53 @@
+﻿@model Cliente
+@{
+    ViewBag.Title = "Details";
+}
+<div style="background-color: white; margin-left: 20%; margin-right: 20%">
+    <!-- Modal Header -->
+    <div class="modal-header">
+        <h4 class="modal-title">@Model.nomeCliente</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+    </div>
+
+    <!-- Modal body -->
+    <div class="modal-body " >
+        <dl class="dl-horizontal">
+
+            <dt>Logradouro</dt>
+            <dd>@ViewData["logradouro"]</dd>
+
+            <dt>Bairro</dt>
+            <dd>@ViewData["bairro"]</dd>
+
+            <dt>Localidade</dt>
+            <dd>@ViewData["localidade"]</dd>
+
+            <dt>Complemento</dt>
+            <dd>@ViewData["complemento"]</dd>
+
+            <dt>Gia</dt>
+            <dd>@ViewData["gia"]</dd>
+
+            <dt>UF</dt>
+            <dd>@ViewData["uf"]</dd>
+
+            <dt>Unidade</dt>
+            <dd>vazio</dd>
+        </dl>
+        
+        
+        
+        
+        
+        
+        
+    </div>
+
+    <!-- Modal footer -->
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+    </div>
+</div>
+<p>
+    @Html.ActionLink("Retornar para a Lista", "Index")
+</p>

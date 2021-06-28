@@ -7,19 +7,6 @@
 <h2>@ViewData["Title"]</h2>
 
     <a asp-action="Create" class="btn btn-warning">Criar novo</a>
-    <form>
-        <div class="form-group">
-            <label for="selecionaVendedor">Filtrar por vendedor</label>
-            <span>
-
-                <select class="form-control" style="width: 15em" id="selecionaVendedor" 
-                        asp-items="@(new SelectList(Model, "Cliente.Id", "Cliente.nomeCliente"))">
-                </select>
-
-            </span>
-        </div>
-
-    </form>
 <table class="table" style="width: 100%">
     <thead>
         <tr>

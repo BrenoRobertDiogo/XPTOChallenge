@@ -36,6 +36,7 @@ namespace XPTOChallenge.Controllers
         // GET: OrdemServicoes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            _context.Cliente.OrderBy(x => x.nomeCliente).ToList();
             if (id == null)
             {
                 return NotFound();
@@ -80,6 +81,7 @@ namespace XPTOChallenge.Controllers
         // GET: OrdemServicoes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            _context.Cliente.OrderBy(x => x.nomeCliente).ToList();
             if (id == null)
             {
                 return NotFound();

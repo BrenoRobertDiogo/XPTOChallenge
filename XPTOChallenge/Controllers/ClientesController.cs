@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Refit;
 using XPTOChallenge.Data;
 using XPTOChallenge.Models;
 using XPTOChallenge.Models.ViewModel;
@@ -42,7 +43,27 @@ namespace XPTOChallenge.Controllers
             {
                 return NotFound();
             }
+            var cepClient = RestService.For<ICepApiService>("http://viacep.com.br");
+            var address = await cepClient.GetAddressAsync(cliente.CEP.ToString());
+            if (cliente.nomeCliente == "Nicolas Cage")
+            {
+                string aviso = "Cage's area";
+                ViewData["logradouro"] = aviso;
+                ViewData["bairro"]     = aviso;
+                ViewData["localidade"] = aviso;
+            } else if (address.Logradouro != null && address.Bairro != null && address.Localidade != null)
+            {
+                ViewData["logradouro"] = address.Logradouro;
+                ViewData["bairro"]     = address.Bairro;
+                ViewData["localidade"] = address.Localidade;
 
+            } else
+            {
+                string mensagem = "Não encontrado";
+                ViewData["logradouro"] = mensagem;
+                ViewData["bairro"]     = mensagem;
+                ViewData["localidade"] = mensagem;
+            }
             return View(cliente);
         }
 
@@ -118,6 +139,49 @@ namespace XPTOChallenge.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(cliente);
+        }
+
+        public async Task<IActionResult> modalCEP(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var cliente = await _context.Cliente
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (cliente == null)
+            {
+                return NotFound();
+            }
+            var cepClient = RestService.For<ICepApiService>("http://viacep.com.br");
+            var address = await cepClient.GetAddressAsync(cliente.CEP.ToString());
+            if (cliente.nomeCliente == "Nicolas Cage")
+            {
+                string aviso = "Cage's area";
+                ViewData["logradouro"] = aviso;
+                ViewData["bairro"] = aviso;
+                ViewData["localidade"] = aviso;
+            }
+            else if (address.Logradouro != null && address.Bairro != null && address.Localidade != null)
+            {
+                string dado = "Não encontrado";
+                ViewData["logradouro"]  = address.Logradouro. Equals("") || address. Logradouro != null ? address.Logradouro  : dado;
+                ViewData["bairro"]      = address.     Bairro.Equals("") || address.     Bairro != null ? address.     Bairro : dado;
+                ViewData["localidade"]  = address. Localidade.Equals("") || address. Localidade != null ? address. Localidade : dado;
+                ViewData["complemento"] = address.Complemento.Equals("") || address.Complemento != null ? address.Complemento : dado;
+                ViewData["gia"]         = address.        Gia.Equals("") || address.        Gia != null ? address.        Gia : dado;
+                ViewData["uf"]          = address.         Uf.Equals("") || address.         Uf != null ? address.         Uf : dado;
+                //ViewData["unidade"]     = address.    Unidade.Equals("") || address.    Unidade != null ? address.    Unidade : dado;
+
+            }
+            else
+            {
+                string mensagem = "Não encontrado";
+                ViewData["logradouro"] = mensagem;
+                ViewData["bairro"] = mensagem;
+                ViewData["localidade"] = mensagem;
+            }
+            return PartialView(cliente);
         }
 
         // GET: Clientes/Delete/5
