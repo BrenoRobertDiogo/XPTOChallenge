@@ -562,7 +562,9 @@ $.validator.addMethod( "iban", function( value, element ) {
 		return false;
 	}
 
-	// Check the country code and find the country specific format
+	// Check the country code and 
+
+	the country specific format
 	countrycode = iban.substring( 0, 2 );
 	bbancountrypatterns = {
 		"AL": "\\d{8}[\\dA-Z]{16}",

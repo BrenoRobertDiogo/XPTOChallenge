@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query.ExpressionTranslators.Internal;
 using Refit;
 using XPTOChallenge.Data;
 using XPTOChallenge.Models;
@@ -98,7 +99,7 @@ namespace XPTOChallenge.Controllers
                 return NotFound();
             }
 
-            var cliente = await _context.Cliente.FindAsync(id);
+            var cliente = await _context.Cliente.FindAsync(id.Value);
             if (cliente == null)
             {
                 return NotFound();
@@ -154,32 +155,25 @@ namespace XPTOChallenge.Controllers
                 return NotFound();
             }
             var cepClient = RestService.For<ICepApiService>("http://viacep.com.br");
-            var address = await cepClient.GetAddressAsync(cliente.CEP.ToString());
+            CepResponse address = await cepClient.GetAddressAsync(cliente.CEP.ToString());
             if (cliente.nomeCliente == "Nicolas Cage")
             {
                 string aviso = "Cage's area";
                 ViewData["logradouro"] = aviso;
-                ViewData["bairro"] = aviso;
+                ViewData["bairro"]     = aviso;
                 ViewData["localidade"] = aviso;
-            }
-            else if (address.Logradouro != null && address.Bairro != null && address.Localidade != null)
-            {
-                string dado = "Não encontrado";
-                ViewData["logradouro"]  = address.Logradouro. Equals("") || address. Logradouro != null ? address.Logradouro  : dado;
-                ViewData["bairro"]      = address.     Bairro.Equals("") || address.     Bairro != null ? address.     Bairro : dado;
-                ViewData["localidade"]  = address. Localidade.Equals("") || address. Localidade != null ? address. Localidade : dado;
-                ViewData["complemento"] = address.Complemento.Equals("") || address.Complemento != null ? address.Complemento : dado;
-                ViewData["gia"]         = address.        Gia.Equals("") || address.        Gia != null ? address.        Gia : dado;
-                ViewData["uf"]          = address.         Uf.Equals("") || address.         Uf != null ? address.         Uf : dado;
-                //ViewData["unidade"]     = address.    Unidade.Equals("") || address.    Unidade != null ? address.    Unidade : dado;
-
             }
             else
             {
-                string mensagem = "Não encontrado";
-                ViewData["logradouro"] = mensagem;
-                ViewData["bairro"] = mensagem;
-                ViewData["localidade"] = mensagem;
+                string dado = "Não encontrado";
+                char[] charsToTrim = { ' ' };
+                ViewData["logradouro"]  = !string.IsNullOrWhiteSpace(address. Logradouro) || !string.IsNullOrEmpty(address. Logradouro ) ? address.Logradouro  : dado;
+                ViewData["bairro"]      = !string.IsNullOrWhiteSpace(address.     Bairro) || !string.IsNullOrEmpty(address.     Bairro ) ? address.     Bairro : dado;
+                ViewData["localidade"]  = !string.IsNullOrWhiteSpace(address. Localidade) || !string.IsNullOrEmpty(address. Localidade ) ? address. Localidade : dado;
+                ViewData["complemento"] = !string.IsNullOrWhiteSpace(address.Complemento) || !string.IsNullOrEmpty(address.Complemento ) ? address.Complemento : dado;
+                ViewData["gia"]         = !string.IsNullOrWhiteSpace(address.        Gia) || !string.IsNullOrEmpty(address.        Gia ) ? address.        Gia : dado;
+                ViewData["uf"]          = !string.IsNullOrWhiteSpace(address.         Uf) || !string.IsNullOrEmpty(address.         Uf ) ? address.         Uf : dado;
+                ViewData["unidade"]     = !string.IsNullOrWhiteSpace(address.    Unidade) || !string.IsNullOrEmpty(address.     Unidade) ? address.Uf : dado;
             }
             return PartialView(cliente);
         }

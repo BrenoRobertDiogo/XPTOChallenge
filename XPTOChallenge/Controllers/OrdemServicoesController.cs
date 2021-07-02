@@ -81,18 +81,21 @@ namespace XPTOChallenge.Controllers
         // GET: OrdemServicoes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            _context.Cliente.OrderBy(x => x.nomeCliente).ToList();
+            //_context.Cliente.OrderBy(x => x.nomeCliente).ToList();
             if (id == null)
             {
                 return NotFound();
             }
 
-            var ordemServico = await _context.OrdemServico.FindAsync(id.Value);
+            var ordemServico = await _context.OrdemServico.FindAsync(id);
+            var clientes = _ordemService.FindAll();
+            var viewModel = new OrdemServiceViewModel(clientes);
             if (ordemServico == null)
             {
                 return NotFound();
             }
-            return View(ordemServico);
+            ViewBag.ordemServico = ordemServico;
+            return View(viewModel);
         }
 
         // POST: OrdemServicoes/Edit/5
@@ -105,11 +108,9 @@ namespace XPTOChallenge.Controllers
         {
             if (ModelState.IsValid)
             {
-                Console.WriteLine("++++++++++++++++++++++++++PASSOU++++++++++++++\n" + id + " " + ordemServico.Id + "\n++++++++++++++++++++++++++++++++++++++++");
-
                 try
                 {
-                    Console.WriteLine("++++++++++++++++++++++++++UPDATE COMPLETE++++++++++++++");
+                    Console.WriteLine("ENTROU NO TRY"+ ordemServico.nomePrestador);
                     _context.Update(ordemServico);
                     await _context.SaveChangesAsync();
                 }
@@ -117,6 +118,7 @@ namespace XPTOChallenge.Controllers
                 {
                     if (!OrdemServicoExists(ordemServico.Id))
                     {
+                        Console.WriteLine("ENTROU NO CATCH");
                         return NotFound();
                     }
                     else
@@ -126,13 +128,15 @@ namespace XPTOChallenge.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+
             if (id != ordemServico.Id)
             {
                 Console.WriteLine("++++++++++++++++++ERROR++++++++++++++++++++++\n" + id + " " + ordemServico.Id + "\n++++++++++++++++++++++++++++++++++++++++");
                 return RedirectToAction(nameof(Index));
             }
-            
-            return View(ordemServico);
+            var clientes = _ordemService.FindAll();
+            var viewModel = new OrdemServiceViewModel(clientes);
+            return  View(viewModel);
         }
         
         // GET: OrdemServicoes/Delete/5

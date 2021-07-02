@@ -1,55 +1,59 @@
-﻿@model XPTOChallenge.Models.OrdemServico
+﻿@model XPTOChallenge.Models.ViewModel.OrdemServiceViewModel
 
 @{
-    ViewData["Title"] = "Editar";
+
+    var ordemServico = ViewBag.ordemServico;
 }
 
-<h2>@ViewData["Title"]</h2>
+<h2>Editar</h2>
 
 <h4>Editar ordem de serviço</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
+
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <label asp-for="tituloServico" class="control-label"></label>
-                <input asp-for="tituloServico" class="form-control" />
-                <span asp-validation-for="tituloServico" class="text-danger"></span>
+                <label asp-for="ordemServico.tituloServico" class="control-label"></label>
+                <input asp-for="ordemServico.tituloServico" class="form-control" value="@ordemServico.tituloServico" />
+                <span asp-validation-for="ordemServico.tituloServico" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Cliente.nomeCliente" class="control-label "></label>
-                <input asp-for="Cliente.nomeCliente" class="form-control" />
-                <span asp-validation-for="Cliente.nomeCliente" class="text-danger"></span>
+                <label asp-for="ordemServico.ClienteId" class="control-label"></label>
+                <select class="form-control"
+                        asp-for="ordemServico.ClienteId"
+                        asp-items="@(new SelectList(Model.Clients, "Id", "nomeCliente"))">
+                </select>
             </div>
             <div class="form-group">
-                <label asp-for="valorServico" class="control-label"></label>
-                <input asp-for="valorServico" class="form-control" />
-                <span asp-validation-for="valorServico" class="text-danger"></span>
+                <label asp-for="ordemServico.valorServico" class="control-label"></label>
+                <input asp-for="ordemServico.valorServico" class="form-control" value="@ordemServico.valorServico" />
+                <span asp-validation-for="ordemServico.valorServico" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="dataExecucao" class="control-label"></label>
-                <input asp-for="dataExecucao" class="form-control" />
-                <span asp-validation-for="dataExecucao" class="text-danger"></span>
+                <label asp-for="ordemServico.dataExecucao" class="control-label"></label>
+                <input asp-for="ordemServico.dataExecucao" class="form-control" value="@ordemServico.dataExecucao" />
+                <span asp-validation-for="ordemServico.dataExecucao" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Cliente.CNPJClient" class="control-label"></label>
-                <input asp-for="Cliente.CNPJClient" class="form-control" />
-                <span asp-validation-for="Cliente.CNPJClient" class="text-danger"></span>
+                <label asp-for="ordemServico.Cliente.CNPJClient" class="control-label"></label>
+                <input asp-for="ordemServico.Cliente.CNPJClient" class="form-control" value="@ordemServico.Cliente.CNPJClient" />
+                <span asp-validation-for="ordemServico.Cliente.CNPJClient" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CPFPrestador" class="control-label"></label>
-                <input asp-for="CPFPrestador" class="form-control" />
-                <span asp-validation-for="CPFPrestador" class="text-danger"></span>
+                <label asp-for="ordemServico.CPFPrestador" class="control-label"></label>
+                <input asp-for="ordemServico.CPFPrestador" class="form-control" value="@ordemServico.CPFPrestador" />
+                <span asp-validation-for="ordemServico.CPFPrestador" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="nomePrestador" class="control-label"></label>
-                <input asp-for="nomePrestador" class="form-control" />
-                <span asp-validation-for="nomePrestador" class="text-danger"></span>
+                <label asp-for="ordemServico.nomePrestador" class="control-label"></label>
+                <input asp-for="ordemServico.nomePrestador" class="form-control" value="@ordemServico.nomePrestador" />
+                <span asp-validation-for="ordemServico.nomePrestador" class="text-danger"></span>
             </div>
+            <input type="hidden" asp-for="ordemServico.Id" value="@ordemServico.Id" />
             <div class="form-group">
-                <input type="submit" value="Salvar" class="btn btn-default"/>
+                <input type="submit" value="Salvar" class="btn btn-default" />
             </div>
         </form>
     </div>

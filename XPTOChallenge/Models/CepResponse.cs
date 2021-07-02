@@ -22,5 +22,7 @@ namespace XPTOChallenge.Models
         public string Ibge { get; set; }
         [JsonProperty("gia")]
         public string Gia { get; set; }
+
+        
     }
 }

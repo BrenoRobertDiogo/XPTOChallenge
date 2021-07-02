@@ -14,7 +14,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="ordemServico.tituloServico" class="control-label"></label>
-                <input asp-for="ordemServico.tituloServico" class="form-control" />
+                <input asp-for="ordemServico.tituloServico" class="form-control"  />
                 <span asp-validation-for="ordemServico.tituloServico" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -27,39 +27,38 @@
                 <input asp-for="ordemServico.dataExecucao" class="form-control" />
                 <span asp-validation-for="ordemServico.dataExecucao" class="text-danger"></span>
             </div>
-                    <div class="form-group">
-                        <label asp-for="ordemServico.ClienteId" class="control-label"></label>
-                        <select class="form-control" 
-                                asp-for="ordemServico.ClienteId" 
-                                asp-items="@(new SelectList(Model.Clients, "Id", "nomeCliente"))">
-
-                        </select>
-
-
-                    </div>
+            <div class="form-group">
+                <label asp-for="ordemServico.ClienteId" class="control-label"></label>
+                <select class="form-control"
+                        asp-for="ordemServico.ClienteId"
+                        asp-items="@(new SelectList(Model.Clients, "Id", "nomeCliente"))">
+                </select>
 
 
-                    <div class="form-group">
-                        <label asp-for="ordemServico.CPFPrestador" class="control-label"></label>
-                        <input asp-for="ordemServico.CPFPrestador" class="form-control" type="number" maxlength="11" />
-                        <span asp-validation-for="ordemServico.CPFPrestador" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="ordemServico.nomePrestador" class="control-label"></label>
-                        <input asp-for="ordemServico.nomePrestador" class="form-control" />
-                        <span asp-validation-for="ordemServico.nomePrestador" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <input type="submit" value="Criar" class="btn btn-default" />
-                    </div>
-                </form>
             </div>
-        </div>
 
-        <div>
-            <a asp-action="Index" class="btn btn-default">Voltar</a>
-        </div>
 
-        @section Scripts {
-            @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-        }
+            <div class="form-group">
+                <label asp-for="ordemServico.CPFPrestador" class="control-label"></label>
+                <input asp-for="ordemServico.CPFPrestador" class="form-control" type="number" maxlength="11" max="99999999999" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"/>
+                <span asp-validation-for="ordemServico.CPFPrestador" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ordemServico.nomePrestador" class="control-label"></label>
+                <input asp-for="ordemServico.nomePrestador" class="form-control" />
+                <span asp-validation-for="ordemServico.nomePrestador" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Criar" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index" class="btn btn-default">Voltar</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

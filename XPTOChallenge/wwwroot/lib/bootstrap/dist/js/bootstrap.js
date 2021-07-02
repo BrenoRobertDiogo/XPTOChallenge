@@ -110,7 +110,8 @@ if (typeof jQuery === 'undefined') {
     }
 
     selector    = selector === '#' ? [] : selector
-    var $parent = $(document).find(selector)
+    var $parent = $(document).
+(selector)
 
     if (e) e.preventDefault()
 

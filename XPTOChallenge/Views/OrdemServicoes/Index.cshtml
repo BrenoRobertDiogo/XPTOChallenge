@@ -7,8 +7,8 @@
 <h2>@ViewData["Title"]</h2>
 
     <a asp-action="Create" class="btn btn-warning">Criar novo</a>
-<table class="table" style="width: 100%">
-    <thead>
+<table class="table table-hover table-dark" style="width: 100%">
+    <thead class="">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Id)
@@ -22,10 +22,10 @@
             <th>
                 @Html.DisplayNameFor(model => model.valorServico)
             </th>
-            <th>
+            <th align="center">
                 @Html.DisplayNameFor(model => model.dataExecucao)
             </th>
-            <th>Operações</th>
+            <th style="text-align: center">Operações</th>
         </tr>
     </thead>
     <tbody>
@@ -46,10 +46,10 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.valorServico)
                 </td>
-                <td>
+                <td align="center">
                     @Html.DisplayFor(modelItem => item.dataExecucao)
                 </td>
-                <td>
+                <td align="center">
                     <a class="btn btn-group-sm btn-success" style="margin-left: 3em" asp-action="Edit" asp-route-id="@item.Id">Editar</a>
 
                     <a class="btn btn-group-sm btn-info" style="margin-left: 3em" asp-action="Details" asp-route-id="@item.Id">Detalhes</a>
